@@ -1,0 +1,27 @@
+Compile TinyFecvpn
+Published on Mar 27, 2020 in Default Classification with 0 comment
+A very good tool, the only bug is that the double-ended IP can only .1 and .2 officially did not give the compilation method To be reasonable is really egg pain, tidy up.
+
+First clone down, to --recursive, because this project contains a subproject, direct clone will cause the submodule to be incomplete and unable to compile
+
+git clone --recursive https://github.com/wangyu-/tinyfecVPN.git
+Note edit the two-ended IP address information in the tun_dev_server and tun_dev_clinet:
+line 219 and line 247, respectively:
+
+assert(set_tun(tun_dev,htonl((ntohl(sub_net_uint32)&0xFFFFFF00)|130),htonl((ntohl(sub_net_uint32)&0xFFFFFF00 )|129),tun_mtu)==0);
+Change 130 and 129 to the address you want
+
+Then prepare to install the compilation tool, otherwise an error will be reported
+
+yum groupinstall 'Development Tools' -y
+
+yum install glibc-static libstdc++-static libxtst-dev -y
+Compile when you're done
+
+make nolimit -j $(grep "cpu cores" /proc/cpuinfo | wc -l)
+Compile and optimize
+
+strip tinyvpn
+This article is created by wyf and licensed under the Creative Commons Attribution 4.0 International License
+Unless reprinted/sourced, the articles on this site are original or translated, please be sure to sign
+the last edit time before reprinting: Mar 27, 2020 at 03:26 pm
